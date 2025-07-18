@@ -1,7 +1,7 @@
 public class App {
 
     public static void main(String[] args) {
-        HealthProfessional hp = new HealthProfessional(
+        GeneralPractitioner hp = new GeneralPractitioner(
             1,
             "Dr. Jane Doe",
             "Cardiology",
@@ -15,8 +15,8 @@ public class App {
     }
 }
 
-// Define HealthProfessional as a separate top-level class
-class HealthProfessional {
+// Define GeneralPractitioner as a separate top-level class
+class GeneralPractitioner {
     private int id;
     public String name;
     public String specialty;
@@ -36,11 +36,11 @@ class HealthProfessional {
         return this.id;
     }
 
-    public HealthProfessional() { 
-        System.out.println("HealthProfessional object created");  
+    public GeneralPractitioner() { 
+        System.out.println("GeneralPractitioner object created");  
     }
 
-    public HealthProfessional(int id, String name, String specialty, String contactInfo, String[] availability, String[] languagesSpoken, String[] certifications, String bio) {
+    public GeneralPractitioner(int id, String name, String specialty, String contactInfo, String[] availability, String[] languagesSpoken, String[] certifications, String bio) {
         setId(id);
         this.name = name;
         this.specialty = specialty;
