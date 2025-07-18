@@ -73,6 +73,17 @@ public class App {
         System.out.println("------------------------------");
         sp2.printDetails();
         System.out.println("------------------------------");
+
+        // Appointment testing
+        Appointment app1 = new Appointment("John Doe", "1234567890", "Monday 10am", gp1);
+        app1.printDetails();
+        System.out.println("------------------------------");
+        Appointment app2 = new Appointment("Jane Smith", "0987654321", "Tuesday 2pm", sp1);
+        app2.printDetails();
+        System.out.println("------------------------------");
+        Appointment app3 = new Appointment();
+        app3.printDetails();
+        System.out.println("------------------------------");
     }
 }
 
@@ -162,5 +173,48 @@ class Specialist extends HealthProfessional {
         System.out.println("Certifications: " + String.join(", ", certifications));
         System.out.println("Bio: " + bio);
         System.out.println("Area of Expertise: " + areaOfExpertise);
+    }
+}
+
+class Appointment {
+    private String patientName;
+    private String patientMobile;
+    private String preferredTimeSlot;
+    private HealthProfessional selectedDoctor;
+
+    // Default constructor
+    public Appointment() {
+        this.patientName = "";
+        this.patientMobile = "";
+        this.preferredTimeSlot = "";
+        this.selectedDoctor = null;
+    }
+
+    // Constructor with all instance variables
+    public Appointment(String patientName, String patientMobile, String preferredTimeSlot, HealthProfessional selectedDoctor) {
+        this.patientName = patientName;
+        this.patientMobile = patientMobile;
+        this.preferredTimeSlot = preferredTimeSlot;
+        this.selectedDoctor = selectedDoctor;
+    }
+
+    // Method to print all instance variables
+    public void printDetails() {
+        System.out.println("Appointment Details:");
+        System.out.println("Patient Name: " + patientName);
+        System.out.println("Patient Mobile: " + patientMobile);
+        System.out.println("Preferred Time Slot: " + preferredTimeSlot);
+        if (selectedDoctor != null) {
+            System.out.println("Doctor Details:");
+            if (selectedDoctor instanceof GeneralPractitioner) {
+                ((GeneralPractitioner)selectedDoctor).printDetails();
+            } else if (selectedDoctor instanceof Specialist) {
+                ((Specialist)selectedDoctor).printDetails();
+            } else {
+                System.out.println("Doctor: " + selectedDoctor.name);
+            }
+        } else {
+            System.out.println("No doctor selected.");
+        }
     }
 }
