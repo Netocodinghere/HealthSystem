@@ -1,6 +1,55 @@
-public class App {
-    public static void main(String[] args) {
+import java.util.ArrayList;
 
+public class App {
+    // Part 5 – Collection of appointments
+
+    // ArrayList to store appointments
+    private static ArrayList<Appointment> appointments = new ArrayList<>();
+
+    // Method to create a new appointment and add to the list
+    public static boolean createAppointment(String patientName, String patientMobile, String preferredTimeSlot, HealthProfessional selectedDoctor) {
+        if (patientName == null || patientName.isEmpty() ||
+            patientMobile == null || patientMobile.isEmpty() ||
+            preferredTimeSlot == null || preferredTimeSlot.isEmpty() ||
+            selectedDoctor == null) {
+            System.out.println("Error: All appointment details must be provided.");
+            return false;
+        }
+        Appointment newApp = new Appointment(patientName, patientMobile, preferredTimeSlot, selectedDoctor);
+        appointments.add(newApp);
+        System.out.println("Appointment created for " + patientName + ".");
+        return true;
+    }
+
+    // Method to print all existing appointments
+    public static void printExistingAppointments() {
+        if (appointments.isEmpty()) {
+            System.out.println("No existing appointments.");
+        } else {
+            for (Appointment app : appointments) {
+                app.printDetails();
+                System.out.println("------------------------------");
+            }
+        }
+    }
+
+    // Method to cancel a booking by patient mobile
+    public static void cancelBooking(String patientMobile) {
+        boolean found = false;
+        for (int i = 0; i < appointments.size(); i++) {
+            if (appointments.get(i).getPatientMobile().equals(patientMobile)) {
+                System.out.println("Cancelling appointment for " + appointments.get(i).getPatientName());
+                appointments.remove(i);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("No appointment found for mobile: " + patientMobile);
+        }
+    }
+
+    public static void main(String[] args) {
         // Part 3 – Using classes and objects
 
         GeneralPractitioner gp1 = new GeneralPractitioner(
@@ -64,25 +113,34 @@ public class App {
         );
 
         gp1.printDetails();
-        System.out.println("------------------------------");
         gp2.printDetails();
-        System.out.println("------------------------------");
         gp3.printDetails();
-        System.out.println("------------------------------");
         sp1.printDetails();
-        System.out.println("------------------------------");
         sp2.printDetails();
         System.out.println("------------------------------");
 
-        // Appointment testing
-        Appointment app1 = new Appointment("John Doe", "1234567890", "Monday 10am", gp1);
-        app1.printDetails();
+        // Part 5 – Collection of appointments
+        System.out.println("// Part 5 – Collection of appointments");
+
+        // Make 2 appointments with general practitioners
+        createAppointment("John Doe", "1234567890", "Monday 10am", gp1);
+        createAppointment("Jane Smith", "0987654321", "Tuesday 2pm", gp2);
+
+        // Make 2 appointments with specialists
+        createAppointment("Alice Green", "5551234567", "Wednesday 1pm", sp1);
+        createAppointment("Bob White", "5559876543", "Thursday 3pm", sp2);
+
         System.out.println("------------------------------");
-        Appointment app2 = new Appointment("Jane Smith", "0987654321", "Tuesday 2pm", sp1);
-        app2.printDetails();
+        System.out.println("Existing appointments:");
+        printExistingAppointments();
+
+        // Cancel one appointment
+        cancelBooking("0987654321");
+
         System.out.println("------------------------------");
-        Appointment app3 = new Appointment();
-        app3.printDetails();
+        System.out.println("Appointments after cancellation:");
+        printExistingAppointments();
+
         System.out.println("------------------------------");
     }
 }
@@ -216,5 +274,12 @@ class Appointment {
         } else {
             System.out.println("No doctor selected.");
         }
+    }
+
+    public String getPatientMobile() {
+        return patientMobile;
+    }
+    public String getPatientName() {
+        return patientName;
     }
 }
